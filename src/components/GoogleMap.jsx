@@ -31,14 +31,8 @@ class GoogleMap extends Component {
     }
 
     render() {
-        const style = {
-            height: '100vh',
-            width: '70%',
-            display: 'flex',
-            float: 'right'
-        }
         return (
-            <div id="map" style={style} />
+            <div id="map" />
         );
     }
 }
