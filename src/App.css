@@ -63,7 +63,23 @@
     width: 90%;
     padding: 15px;
     border-radius: 15px;
-    margin-top: 10px;
+    margin: 10px 0;
     font-size: 15px;
+}
 
+.sidebar-item {
+    list-style-type: none;
+    padding: 20px;
+    margin: 0;
+    border-bottom: 2px solid black;
+    text-align: center;
+}
+
+.sidebar-item:first-child {
+    border-top: 2px solid black;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
 }
