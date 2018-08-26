@@ -25,6 +25,8 @@ class GoogleMap extends Component {
                 center: {lat: 30.4548, lng: -97.6223},
                 zoom: 13,
                 mapTypeId: 'roadmap',
+                mapTypeControl: false,
+                streetViewControl: false
             });
             // create info window for each location
             const infowindow = new window.google.maps.InfoWindow();

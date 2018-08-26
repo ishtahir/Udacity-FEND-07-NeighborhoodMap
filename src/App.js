@@ -18,9 +18,9 @@ class App extends Component {
         return (
             <div className="app-container">
                 <header className="header">
-                    <span className="menu-icon">☰</span><h1 className="title">Map of Pflugerville, TX</h1>
+                    <input type="text" className="search" placeholder="Filter items" /><h1 className="title">Map of Pflugerville, TX</h1>
                 </header>
-                <Sidebar locations={this.props.locations} />
+                {/* <Sidebar locations={this.props.locations} /> */}
                 <GoogleMap locations={this.props.locations} />
             </div>
         );
