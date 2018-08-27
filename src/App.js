@@ -4,6 +4,11 @@ import GoogleMap from './components/GoogleMap.jsx';
 import './App.css';
 
 class App extends Component {
+    // add state here
+    state = {
+        query: ''
+    }
+
     static defaultProps = {
         locations: [
             {name: 'Connally High School', loc: {lat: 30.4192234, lng: -97.6762375}, address: '13212 N Lamar Blvd, Austin, TX 78753', phone: '512-594-0800'},
@@ -14,20 +19,27 @@ class App extends Component {
         ]
     }
 
+    handleFilter(query) {
+        this.setState({ query });
+    }
+
     render() {
+        const {query} = this.state;
+        const {locations} = this.props
         return (
             <div className="app-container">
                 <header className="header">
-                    <input type="text" placeholder="Filter items" className="search"/>
+                    <input type="text" placeholder="Filter items" className="search" onChange={event => this.handleFilter(event.target.value)} value={query}/>
                     <h1 className="title">Map of Pflugerville, TX</h1>
                 </header>
-                {/* <Sidebar locations={this.props.locations} /> */}
                 <GoogleMap locations={this.props.locations} />
                 <div className="content">
                     <ul>
-                        {this.props.locations.map((location, index) => {
-                            return <li key={index} className="sidebar-item">{location.name}</li>
-                        })}
+                        {locations
+                            .filter(location => location.name.toLowerCase().includes(query.toLowerCase()))
+                            .map((location, index) => {
+                                return <li key={index} className="sidebar-item">{location.name}</li>}
+                        )}
                     </ul>
                 </div>
             </div>
