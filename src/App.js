@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Sidebar from './components/Sidebar.jsx';
+// import Sidebar from './components/Sidebar.jsx';
 import GoogleMap from './components/GoogleMap.jsx';
 import './App.css';
 
@@ -18,10 +18,18 @@ class App extends Component {
         return (
             <div className="app-container">
                 <header className="header">
-                    <input type="text" className="search" placeholder="Filter items" /><h1 className="title">Map of Pflugerville, TX</h1>
+                    <input type="text" placeholder="Filter items" className="search"/>
+                    <h1 className="title">Map of Pflugerville, TX</h1>
                 </header>
                 {/* <Sidebar locations={this.props.locations} /> */}
                 <GoogleMap locations={this.props.locations} />
+                <div className="content">
+                    <ul>
+                        {this.props.locations.map((location, index) => {
+                            return <li key={index} className="sidebar-item">{location.name}</li>
+                        })}
+                    </ul>
+                </div>
             </div>
         );
     }
