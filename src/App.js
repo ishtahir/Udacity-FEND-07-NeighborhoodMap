@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import Sidebar from './components/Sidebar.jsx';
 import GoogleMap from './components/GoogleMap.jsx';
 import './App.css';
 
@@ -25,7 +24,7 @@ class App extends Component {
 
     render() {
         const {query} = this.state;
-        const {locations} = this.props
+        const {locations} = this.props;
         return (
             <div className="app-container">
                 <header className="header">
@@ -43,7 +42,7 @@ class App extends Component {
                     </ul>
                 </div>
             </div>
-        );
+        )
     }
 }
 
