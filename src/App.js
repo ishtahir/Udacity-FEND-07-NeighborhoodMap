@@ -31,7 +31,7 @@ class App extends Component {
                     <input type="text" placeholder="Filter items" className="search" onChange={event => this.handleFilter(event.target.value)} value={query}/>
                     <h1 className="title">Map of Pflugerville, TX</h1>
                 </header>
-                <GoogleMap locations={this.props.locations} />
+                <GoogleMap locations={this.props.locations} query={this.state.query} />
                 <div className="content">
                     <ul>
                         {locations

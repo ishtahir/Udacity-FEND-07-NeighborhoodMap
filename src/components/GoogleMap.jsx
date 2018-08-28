@@ -31,27 +31,32 @@ class GoogleMap extends Component {
             // create info window for each location
             const infowindow = new window.google.maps.InfoWindow();
             // map over the locations array to create a marker and info window for each location
-            this.props.locations.forEach(location => {
-                const contentString = `
-                    <h2>${location.name}</h2><h3>${location.address}</h3>
-                `;
-                // create a marker for each location
-                const marker = new window.google.maps.Marker({
-                    position: location.loc,
-                    map: map,
-                    title: location.name
-                });
-                // set the info window content to location info and open on marker click
-                marker.addListener('click', function() {
-                    infowindow.setContent(contentString);
-                    infowindow.open(map, marker);
-                });
+            this.props.locations
+                .filter(location => location.name.toLowerCase().includes(this.props.query.toLowerCase()))
+                .forEach(location => {
+                    const contentString = `
+                        <h2>${location.name}</h2>
+                        <h3>${location.address}</h3>
+                        <p><a href="tel:${location.phone}">${location.phone}</a></p>
+                    `;
+                    // create a marker for each location
+                    const marker = new window.google.maps.Marker({
+                        position: location.loc,
+                        map: map,
+                        title: location.name,
+                        animation: window.google.maps.Animation.DROP
+                    });
+                    // set the info window content to location info and open on marker click
+                    marker.addListener('click', function() {
+                        infowindow.setContent(contentString);
+                        infowindow.open(map, marker);
+                    });
 
-                map.addListener('click', function() {
-                    if (infowindow) {
-                        infowindow.close();
-                    }
-                })
+                    map.addListener('click', function() {
+                        if (infowindow) {
+                            infowindow.close();
+                        }
+                    })
             });
         }
     }
