@@ -20,6 +20,7 @@ class GoogleMap extends Component {
 
     componentDidUpdate() {
         if (this.state.mapIsReady) {
+            const markers = [];
             // display the map
             const map = new window.google.maps.Map(document.getElementById('map'), {
                 center: {lat: 30.4548, lng: -97.6223},
@@ -31,6 +32,7 @@ class GoogleMap extends Component {
             // create info window for each location
             const infowindow = new window.google.maps.InfoWindow();
             // map over the locations array to create a marker and info window for each location
+
             this.props.locations
                 .filter(location => location.name.toLowerCase().includes(this.props.query.toLowerCase()))
                 .forEach(location => {
@@ -57,7 +59,9 @@ class GoogleMap extends Component {
                             infowindow.close();
                         }
                     })
+                    markers.push(marker);
             });
+            console.log(markers)
         }
     }
 

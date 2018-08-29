@@ -37,8 +37,8 @@ class App extends Component {
                         {locations
                             .filter(location => location.name.toLowerCase().includes(query.toLowerCase()))
                             .map((location, index) => {
-                                return <li key={index} className="sidebar-item">{location.name}</li>}
-                        )}
+                                return <li className="sidebar-item" key={index}>{location.name}</li>})
+                        }
                     </ul>
                 </div>
             </div>
