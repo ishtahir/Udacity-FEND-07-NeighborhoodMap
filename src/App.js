@@ -37,7 +37,7 @@ class App extends Component {
                         {locations
                             .filter(location => location.name.toLowerCase().includes(query.toLowerCase()))
                             .map((location, index) => {
-                                return <li className="sidebar-item" key={index}>{location.name}</li>})
+                                return <li className="sidebar-item" key={index} onClick={this.showInfoWindow.bind(this)}>{location.name}</li>})
                         }
                     </ul>
                 </div>
