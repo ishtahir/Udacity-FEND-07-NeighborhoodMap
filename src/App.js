@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import GoogleMap from './components/GoogleMap.jsx';
+import Filter from './components/Filter.jsx';
 import './App.css';
 
 class App extends Component {
-    // add state here
     state = {
-        query: ''
-    }
+        query: '',
+        map: '',
+        markers: [],
+        infowindow: '',
+        content: []
+    };
 
     static defaultProps = {
         locations: [
@@ -16,14 +19,61 @@ class App extends Component {
             {name: 'Weiss High School',loc: {lat: 30.4291442, lng: -97.56574520000001}, address: '5201 Wolf Pack Dr, Pflugerville, TX 78660', phone: '512-594-1400'},
             {name: 'Pflugerville Academic Center of Excellence',loc: {lat: 30.446406, lng: -97.63657909999999}, address: '1401-B W Pecan St, Pflugerville, TX 78660', phone: '512-594-1900'}
         ]
-    }
+    };
 
     handleFilter(query) {
         this.setState({ query });
     }
 
+    componentDidMount() {
+        const apiKey = 'AIzaSyBuOtZ4Xw9Wo4EK96HJ5Xmrs4Rz9sv5P1c';
+        loadScript(`https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`);
+        window.initMap = this.initMap.bind(this);
+    }
+
+    initMap() {
+        const markers = [];
+        const content = [];
+        const map = new window.google.maps.Map(document.getElementById('map'), {
+            center: {lat: 30.4548, lng: -97.6223},
+            zoom: 12,
+            mapTypeId: 'roadmap',
+            mapTypeControl: false,
+            streetViewControl: false
+        });
+        const infowindow = new window.google.maps.InfoWindow();
+        this.props.locations.filter(location => location.name.toLowerCase().includes(this.state.query.toLowerCase())).forEach(location => {
+            const contentString = `
+                <h2>${location.name}</h2>
+                <h3>${location.address}</h3>
+                <p><a href="tel:${location.phone}">${location.phone}</a></p>
+            `;
+            // create a marker for each location
+            const marker = new window.google.maps.Marker({
+                position: location.loc,
+                map: map,
+                title: location.name,
+                animation: window.google.maps.Animation.DROP
+            });
+            markers.push(marker);
+            content.push(contentString);
+            // set the info window content to location info and open on marker click
+            marker.addListener('click', function() {
+                infowindow.setContent(contentString);
+                infowindow.open(map, marker);
+            });
+
+            map.addListener('click', function() {
+                if (infowindow) {
+                    infowindow.close();
+                }
+            })
+        });
+        this.setState({ map, markers, infowindow, content });
+    }
+
     render() {
-        const {query} = this.state;
+        const {query, map, markers, content, infowindow} = this.state;
         const {locations} = this.props;
         return (
             <div className="app-container">
@@ -31,19 +81,23 @@ class App extends Component {
                     <input type="text" placeholder="Filter items" className="search" onChange={event => this.handleFilter(event.target.value)} value={query}/>
                     <h1 className="title">Map of Pflugerville, TX</h1>
                 </header>
-                <GoogleMap locations={this.props.locations} query={this.state.query} />
-                <div className="content">
-                    <ul>
-                        {locations
-                            .filter(location => location.name.toLowerCase().includes(query.toLowerCase()))
-                            .map((location, index) => {
-                                return <li className="sidebar-item" key={index} onClick={this.showInfoWindow.bind(this)}>{location.name}</li>})
-                        }
-                    </ul>
-                </div>
+                <div id="map"></div>
+                <Filter query={query} locations={locations} map={map} markers={markers} content={content} infowindow={infowindow} />
             </div>
         )
     }
+}
+
+function loadScript(url) {
+    let index = window.document.getElementsByTagName('script')[0];
+    let script = window.document.createElement('script');
+    script.src = url;
+    script.async = true;
+    script.defer = true;
+    index.parentNode.insertBefore(script, index);
+    script.onerror = function() {
+        document.write('Error loading Map. Please try again.')
+    };
 }
 
 export default App;
