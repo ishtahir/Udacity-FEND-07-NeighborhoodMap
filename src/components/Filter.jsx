@@ -18,12 +18,12 @@ class Filter extends Component {
     render() {
         const {locations, query} = this.props;
         return (
-            <div className="content">
+            <div className="content" aria-label="List of High Schools in Pflugerville">
                 <ul>
                     {locations
                         .filter(location => location.name.toLowerCase().includes(query.toLowerCase()))
                         .map((location, index) => {
-                            return <li className="list-item" key={index} onClick={this.handleClicks.bind(this, location)}>{location.name}</li>})
+                            return <li className="list-item" key={index} onClick={this.handleClicks.bind(this, location)} tabIndex={1}>{location.name}</li>})
                     }
                 </ul>
             </div>

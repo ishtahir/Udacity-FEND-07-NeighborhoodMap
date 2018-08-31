@@ -95,14 +95,14 @@ class App extends Component {
         const {query, map, markers, contents, infowindow, filtered, hideMarkers} = this.state;
         const {locations} = this.props;
         return (
-            <div className="app-container">
+            <main className="app-container">
                 <header className="header">
-                    <input type="text" placeholder="Filter items" className="search" onChange={event => this.handleFilter(event.target.value)} value={query}/>
+                    <input type="text" placeholder="Filter items" className="search" onChange={event => this.handleFilter(event.target.value)} value={query} aria-label="Filter search input" tabIndex={1} />
                     <h1 className="title">Map of Pflugerville, TX</h1>
                 </header>
                 <Filter query={query} locations={locations} map={map} markers={markers} contents={contents} infowindow={infowindow} filtered={filtered} hideMarkers={hideMarkers} />
-                <div id="map"></div>
-            </div>
+                <div id="map" role="application" aria-label="map"></div>
+            </main>
         )
     }
 }
