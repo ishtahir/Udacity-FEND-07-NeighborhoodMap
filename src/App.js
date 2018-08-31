@@ -24,13 +24,16 @@ class App extends Component {
     };
 
     handleFilter(query) {
+        // set state of query, setting visibility of each marker
         this.setState({ query });
         this.state.markers.map(marker => marker.setVisible(true));
 
+        // filter locations based on query, set state of filtered
         if (query) {
             const filtered = this.props.locations.filter(location => location.name.toLowerCase().includes(this.state.query.toLowerCase()));
             this.setState({ filtered });
 
+            // hide markers that are not searched for and update its state
             const hideMarkers = this.state.markers.filter(marker => filtered.every(filteredLocation => filteredLocation.name !== marker.title));
             hideMarkers.forEach(marker => marker.setVisible(false));
             this.setState({ hideMarkers });
@@ -46,6 +49,7 @@ class App extends Component {
     }
 
     initMap() {
+        // initialize the whole map
         const markers = [];
         const contents = [];
         const map = new window.google.maps.Map(document.getElementById('map'), {
@@ -57,6 +61,7 @@ class App extends Component {
         });
         const infowindow = new window.google.maps.InfoWindow();
         this.props.locations.filter(location => location.name.toLowerCase().includes(this.state.query.toLowerCase())).forEach(location => {
+            //create content string for each info window
             const contentString = `
                 <h2>${location.name}</h2>
                 <h3>${location.address}</h3>
@@ -76,7 +81,7 @@ class App extends Component {
                 infowindow.setContent(contentString);
                 infowindow.open(map, marker);
             });
-
+            // close info windows when map is clicked
             map.addListener('click', function() {
                 if (infowindow) {
                     infowindow.close();
@@ -102,6 +107,7 @@ class App extends Component {
     }
 }
 
+// no libraries used, loading script tags the old fashioned way
 function loadScript(url) {
     let index = window.document.getElementsByTagName('script')[0];
     let script = window.document.createElement('script');
