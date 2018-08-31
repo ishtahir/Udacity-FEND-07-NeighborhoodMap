@@ -43,23 +43,27 @@ ul {
 }
 
 .header {
-    background-color: #0b7215;
+    background-color: #00f;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
 .title {
     margin: 0 10px 0 0;
     padding: 0;
+    font-size: 25px;
+    color: #ff0;
 }
 
 .search {
-    width: 30%;
+    width: 90%;
     padding: 10px;
     border: 0;
     border-radius: 10px;
     margin: 10px 0 10px 10px;
     font-size: 15px;
+    order: 1;
 }
 
 .list-item {
@@ -84,8 +88,7 @@ ul {
 .content {
   position: absolute;
   padding: 0 5px;
-  top: 58px;
-  left: 10px;
+  top: 87px;
   background: white;
-  width: 30%;
+  width: 100%;
 }
