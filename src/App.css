@@ -39,7 +39,7 @@ ul {
 }
 
 #map {
-    height: 100vh;
+    height: 80vh;
 }
 
 .header {
@@ -86,9 +86,7 @@ ul {
 }
 
 .content {
-  position: absolute;
-  padding: 0 5px;
-  top: 87px;
+  padding: 0;
   background: white;
   width: 100%;
 }

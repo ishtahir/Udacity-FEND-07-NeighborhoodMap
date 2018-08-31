@@ -93,8 +93,8 @@ class App extends Component {
                     <input type="text" placeholder="Filter items" className="search" onChange={event => this.handleFilter(event.target.value)} value={query}/>
                     <h1 className="title">Map of Pflugerville, TX</h1>
                 </header>
-                <div id="map"></div>
                 <Filter query={query} locations={locations} map={map} markers={markers} content={content} infowindow={infowindow} />
+                <div id="map"></div>
             </div>
         )
     }
