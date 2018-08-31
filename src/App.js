@@ -23,6 +23,18 @@ class App extends Component {
 
     handleFilter(query) {
         this.setState({ query });
+        this.state.markers.map(marker => marker.setVisible(true));
+
+        if (query) {
+            const filtered = this.props.locations.filter(location => location.name.toLowerCase().includes(this.state.query.toLowerCase()));
+            this.setState({ filtered });
+
+            const hideMarkers = this.state.markers.filter(marker => filtered.every(filteredLocation => filteredLocation.name !== marker.title));
+            hideMarkers.forEach(marker => marker.setVisible(false));
+            this.setState({ hideMarkers });
+        } else {
+            this.state.markers.forEach(marker => marker.setVisible(true));
+        }
     }
 
     componentDidMount() {
