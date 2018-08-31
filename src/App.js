@@ -8,7 +8,7 @@ class App extends Component {
         map: '',
         markers: [],
         infowindow: '',
-        content: [],
+        contents: [],
         filtered: [],
         hideMarkers: []
     };
@@ -47,7 +47,7 @@ class App extends Component {
 
     initMap() {
         const markers = [];
-        const content = [];
+        const contents = [];
         const map = new window.google.maps.Map(document.getElementById('map'), {
             center: {lat: 30.4548, lng: -97.6223},
             zoom: 12,
@@ -70,7 +70,7 @@ class App extends Component {
                 animation: window.google.maps.Animation.DROP
             });
             markers.push(marker);
-            content.push(contentString);
+            contents.push(contentString);
             // set the info window content to location info and open on marker click
             marker.addListener('click', function() {
                 infowindow.setContent(contentString);
@@ -83,11 +83,11 @@ class App extends Component {
                 }
             })
         });
-        this.setState({ map, markers, infowindow, content });
+        this.setState({ map, markers, infowindow, contents });
     }
 
     render() {
-        const {query, map, markers, content, infowindow, filtered, hideMarkers} = this.state;
+        const {query, map, markers, contents, infowindow, filtered, hideMarkers} = this.state;
         const {locations} = this.props;
         return (
             <div className="app-container">
@@ -95,7 +95,7 @@ class App extends Component {
                     <input type="text" placeholder="Filter items" className="search" onChange={event => this.handleFilter(event.target.value)} value={query}/>
                     <h1 className="title">Map of Pflugerville, TX</h1>
                 </header>
-                <Filter query={query} locations={locations} map={map} markers={markers} content={content} infowindow={infowindow} filtered={filtered} hideMarkers={hideMarkers} />
+                <Filter query={query} locations={locations} map={map} markers={markers} contents={contents} infowindow={infowindow} filtered={filtered} hideMarkers={hideMarkers} />
                 <div id="map"></div>
             </div>
         )
