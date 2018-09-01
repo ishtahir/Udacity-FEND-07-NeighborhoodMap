@@ -15,11 +15,12 @@ class App extends Component {
 
     static defaultProps = {
         locations: [
-            {name: 'Connally High School', loc: {lat: 30.4192234, lng: -97.6762375}, address: '13212 N Lamar Blvd, Austin, TX 78753', phone: '512-594-0800'},
-            {name: 'Pflugerville High School',loc: {lat: 30.4448663, lng: -97.6337909}, address: '1301 W Pecan St, Pflugerville, TX 78660', phone: '512-594-0500'},
-            {name: 'Hendrickson High School',loc: {lat: 30.4656629, lng: -97.5878583}, address: '19201 Colorado Sand Dr, Pflugerville, TX 78660', phone: '512-594-1100'},
-            {name: 'Weiss High School',loc: {lat: 30.4291442, lng: -97.56574520000001}, address: '5201 Wolf Pack Dr, Pflugerville, TX 78660', phone: '512-594-1400'},
-            {name: 'Pflugerville Academic Center of Excellence',loc: {lat: 30.446406, lng: -97.63657909999999}, address: '1401-B W Pecan St, Pflugerville, TX 78660', phone: '512-594-1900'}
+            {name: 'The Pfield Stadium', loc: {lat: 30.4456494, lng: -97.6326804}, address: '1440 W. Pecan St, Pflugerville, TX 78660', phone: '512-594-0000', mascot: 'Pfield', wiki: 'https://en.wikipedia.org/wiki/Pflugerville_High_School'},
+            {name: 'Connally High School', loc: {lat: 30.4192234, lng: -97.6762375}, address: '13212 N Lamar Blvd, Austin, TX 78753', phone: '512-594-0800', mascot: 'Cougars', wiki: 'https://en.wikipedia.org/wiki/John_B._Connally_High_School'},
+            {name: 'Pflugerville High School',loc: {lat: 30.4448663, lng: -97.6337909}, address: '1301 W Pecan St, Pflugerville, TX 78660', phone: '512-594-0500', mascot: 'Panthers', wiki: 'https://en.wikipedia.org/wiki/Pflugerville_High_School'},
+            {name: 'Hendrickson High School',loc: {lat: 30.4656629, lng: -97.5878583}, address: '19201 Colorado Sand Dr, Pflugerville, TX 78660', phone: '512-594-1100', mascot: 'Hawks', wiki: 'https://en.wikipedia.org/wiki/Hendrickson_High_School'},
+            {name: 'Weiss High School',loc: {lat: 30.4291442, lng: -97.56574520000001}, address: '5201 Wolf Pack Dr, Pflugerville, TX 78660', phone: '512-594-1400', mascot: 'Wolves', wiki: 'https://en.wikipedia.org/wiki/Pflugerville_Independent_School_District'},
+            {name: 'Pflugerville Academic Center of Excellence',loc: {lat: 30.446406, lng: -97.63657909999999}, address: '1401-B W Pecan St, Pflugerville, TX 78660', phone: '512-594-1900', mascot: 'PACE', wiki: 'https://en.wikipedia.org/wiki/Pflugerville_Independent_School_District'}
         ]
     };
 
@@ -53,8 +54,8 @@ class App extends Component {
         const markers = [];
         const contents = [];
         const map = new window.google.maps.Map(document.getElementById('map'), {
-            center: {lat: 30.4548, lng: -97.6223},
-            zoom: 12,
+            center: {lat: 30.44837, lng: -97.6423},
+            zoom: 13,
             mapTypeId: 'roadmap',
             mapTypeControl: false,
             streetViewControl: false
@@ -63,9 +64,13 @@ class App extends Component {
         this.props.locations.filter(location => location.name.toLowerCase().includes(this.state.query.toLowerCase())).forEach(location => {
             //create content string for each info window
             const contentString = `
-                <h2>${location.name}</h2>
-                <h3>${location.address}</h3>
-                <p><a href="tel:${location.phone}">${location.phone}</a></p>
+                <div class="info-content">
+                    <h2>${location.name}</h2>
+                </div>
+                <p>Mascot: ${location.mascot}</p>
+                <p>Address: <a href="https://maps.google.com/?q=${location.address}">${location.address}</a></p>
+                <p>Phone: <a href="tel:${location.phone}">${location.phone}</a></p>
+                <p><a href=${location.wiki}>Check out the ${location.mascot} on Wikipedia</a></p>
             `;
             // create a marker for each location
             const marker = new window.google.maps.Marker({
