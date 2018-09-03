@@ -58,7 +58,7 @@ class App extends Component {
             zoom: 13,
             mapTypeId: 'roadmap',
             mapTypeControl: false,
-            streetViewControl: false
+            streetViewControl: true
         });
         const infowindow = new window.google.maps.InfoWindow();
         this.props.locations.filter(location => location.name.toLowerCase().includes(this.state.query.toLowerCase())).forEach(location => {
