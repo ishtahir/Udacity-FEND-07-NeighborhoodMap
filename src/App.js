@@ -85,6 +85,11 @@ class App extends Component {
             marker.addListener('click', function() {
                 infowindow.setContent(contentString);
                 infowindow.open(map, marker);
+                // animate the markers on click
+                marker.setAnimation(window.google.maps.Animation.BOUNCE)
+                setTimeout(function() {
+                    marker.setAnimation(null)
+                }, 500);
             });
             // close info windows when map is clicked
             map.addListener('click', function() {
